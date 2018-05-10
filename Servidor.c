@@ -12,6 +12,8 @@ typedef struct{
   int tipo;
   }login;
 
+
+// O carrega_utilizadores serve para carregar o TXT para a struct login que está definida em cima
 int carrega_utilizadores(login peepz[]){
 FILE *fx; char s[40],n=0,i,j=0;
 	fx=fopen("AdminLogin.txt","r");
@@ -53,7 +55,7 @@ int main(void){
   login:
     printf("Nome de utilizador:");
     scanf("%s",User);
-    if(strcmp(User,peepz[0].username) != 0){
+    if(strcmp(User,peepz[0].username) != 0){ // O strcmp serve para comparar duas Strings. As duas Strings são iguais quando o resulatado é 0
       printf("Utilizador inválido\n");
       printf("1)Voltar ao menu\n");
       printf("2)Tentar novamente\n");
@@ -70,7 +72,10 @@ int main(void){
 	goto login;
     }
     else{
-      return 0;
+      return 0;// agora a partir deste else ou de outrtra forma caso queiras mudar o código :D.
+               // Tens que fazer o mesmo mas para uma password.
+               // Ou seja um scan e um strcmp a password está do txt está em peepz[0].password.
+               // Good Luck Have Fun
     }
   } 
 }
