@@ -26,6 +26,7 @@ FILE *fx; char s[40],n=0,i,j=0;
 		peepz[n].password[j]='\0';
 		i++;
 		j=0;
+		peepz[i].tipo=atoi(&s[i]);
                 n++;
 	}
 	fclose(fx);
@@ -101,6 +102,7 @@ int main(void){
     else{
       printf("ISTO ESTÁ A FUNCIONAR");
     }
+    /*
  menu_principal:
     printf("**Menu Principal**\n");
     printf("1)Criar Novo Tópico\n");
@@ -125,6 +127,5 @@ int main(void){
       goto estatísticas;
     if(i==5)
       return 0;
-      
-  }
-                            
+    */
+}                      
