@@ -30,10 +30,12 @@ FILE *fx; char s[40],n=0,i,j=0;
 	}
 	fclose(fx);
 	return n;
+	 	
 }
 int main(void){
   int i = 0;
   char User[20];
+  char paswrd[20];
   login peepz[5];
   int n;
   n = carrega_utilizadores(peepz);
@@ -72,10 +74,57 @@ int main(void){
 	goto login;
     }
     else{
-      return 0;// agora a partir deste else ou de outrtra forma caso queiras mudar o código :D.
-               // Tens que fazer o mesmo mas para uma password.
-               // Ou seja um scan e um strcmp a password está do txt está em peepz[0].password.
-               // Good Luck Have Fun
+      goto password;
     }
-  } 
-}
+  }
+ password:
+    printf("%s\n",peepz[0].password);
+    printf("Password:");
+    scanf("%s", paswrd);
+    printf("%s\n",paswrd);
+    if(strcmp(paswrd,peepz[0].password) != 0){
+      printf("Password inválida\n");
+      printf("1)Voltar ao menu\n");
+      printf("2)Tentar novamente\n");
+      printf("A Sua Opção:");
+      scanf("%d", &i);
+      while(i <= 0 || i > 2){
+	printf("Opção não válida \n");
+	printf("A Sua Opção: ");
+	scanf("%d", &i);   
+      }
+	if(i==1)
+	  goto menu;
+	if(i==2)
+	  goto password;
+    }
+    else{
+      printf("ISTO ESTÁ A FUNCIONAR");
+    }
+ menu_principal:
+    printf("**Menu Principal**\n");
+    printf("1)Criar Novo Tópico\n");
+    printf("2)Gerir Tópicos\n");
+    printf("3)Gerir Utilizadores\n");
+    printf("4)Ver Estatísticas\n");
+    printf("5)Logout\n");
+    printf("A Sua Opção: ");
+    scanf("%d",&i);
+    while(i <= 0 || i > 5){
+      printf("Opção não válida \n");
+      printf("A Sua Opção: ");
+      scanf("%d", &i);
+    }
+    if(i==1)
+      goto criar_tópicos;
+    if(i==2)
+      goto gestão_de_tópicos;
+    if(i==3)
+      goto gestão_de_utilizadores;
+    if(i==4)
+      goto estatísticas;
+    if(i==5)
+      return 0;
+      
+  }
+                            
