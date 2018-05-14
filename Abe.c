@@ -27,7 +27,17 @@ FILE *fx; char s[40],n=0,i,j;
 	fclose(fx);
 	return n;
 }
-
+int adicionar_utilizador(login peepz[],int n,char User[],char Userpass[]){
+  FILE *fx;
+  fx=fopen("Clientes.txt","a");
+  fprintf(fx,"%s;%s;1",User,Userpass);
+  n++;
+  for(int i = 0;i < 12;i++)
+    peepz[n].username[i] = User[i];
+  for(int i = 0; i < strlen(Userpass); i++)
+    peepz[n].password[i] = Userpass[i];
+  peepz[n].tipo = 1;
+}
 
 int main(void){
   int i= 0,n,j = 0,y = 0,z = 0;
@@ -57,16 +67,67 @@ int main(void){
     printf("O seu nome de utilizador deve ser o seu número mecanográfico. Por exemplo up201705687. \n");
     printf("O seu nome:");
     scanf("%s",User);
-    printf("Indique agora a sua password.");
-    printf("Regras: 1 -> Deve conter no mínimo 4 caracteres e no máximo 15");
-    printf("        2 -> Não pode conter ; e deve ter no minimo uma letra e um algarismo");
+    for(i = 0; i < n;i++){
+      if(strcmp(User,peepz[i].username) == 0){
+	i = -1;
+	break;
+      }
+    } 
+    if(strlen(User) != 11 || i == -1){
+      printf("Username Inválido ou Já Existente\n");
+      printf("1) Tentar Novamente \n");
+      printf("2) Voltar ao menu \n");
+      printf("A sua Opção:");
+      scanf("%d" , &i);
+      while(i <= 0 || i > 2){
+	printf("Opção inválida \n");
+	printf("A Sua Opção: ");
+	scanf("%d", &i);
+    }
+      if(i == 1){
+	goto menu_reg;
+      }
+      if(i == 2){
+	goto menu_aut;
+      }
+    }
+    printf("Indique agora a sua password.\n");
+    printf("Regras: 1 -> Deve conter no mínimo 4 caracteres e no máximo 15\n");
+    printf("        2 -> Não pode conter ; e deve ter no minimo uma letra e um algarismo\n");
     printf("A sua Password:");
     scanf("%s",Userpass);
-    for(int x = 0;x < Userpass.length;x++){
-      if('0' <= Userpass[x] && Userpass[x] >= '9'){
+    for(int x = 0;x < strlen(Userpass);x++){
+      if(isdigit(Userpass[x])){
         y = 1;
       }
-      if('a' )
+      if(isalpha(Userpass[x])){
+	z = 1;
+      }
+      if(y == 1 && z == 1){
+	break;
+      }
+    }
+    if(!(y == 1 && z == 1 && (strlen(Userpass) >= 4 && strlen(Userpass) <= 15))){
+      printf("Password Inválida \n");
+      printf("1) Tentar Novamente \n");
+      printf("2) Voltar ao menu \n");
+      printf("A sua Opção:");
+      scanf("%d" , &i);
+      while(i <= 0 || i > 2){
+	printf("Opção inválida \n");
+	printf("A Sua Opção: ");
+	scanf("%d", &i);
+    }
+      if(i == 1){
+	goto menu_reg;
+      }
+      if(i == 2){
+	goto menu_aut;
+      }
+    }
+    else{
+      n = adicionar_utilizador(peepz,n,User,Userpass);
+    }
   }
   if(i == 1){
   menu_login:
