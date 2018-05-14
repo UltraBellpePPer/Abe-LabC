@@ -29,7 +29,7 @@ FILE *fx; char s[40],n=0,i,j;
 }
 int adicionar_utilizador(login peepz[],int n,char User[],char Userpass[]){
   FILE *fx;
-  fx=fopen("Clientes.txt","a");
+  fx=fopen("Clientesx.txt","a");
   fprintf(fx,"%s;%s;1",User,Userpass);
   n++;
   for(int i = 0;i < 12;i++)
@@ -64,7 +64,8 @@ int main(void){
   if(i == 2){
     menu_reg:
     printf("Indique agora o seu nome de utilizador. \n");
-    printf("O seu nome de utilizador deve ser o seu número mecanográfico. Por exemplo up201705687. \n");
+    printf("O seu nome de utilizador deve ser o seu número mecanográfico.\n");
+    printf("Por exemplo up201705687. \n");
     printf("O seu nome:");
     scanf("%s",User);
     for(i = 0; i < n;i++){

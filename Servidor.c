@@ -7,14 +7,14 @@
 #define ANSI_COLOR_RESET "\x1b[0m"
 
 typedef struct{
-  char username[20];
-  char password[10];
+  char username[12];
+  char password[15];
   int tipo;
   }login;
 
 
 // O carrega_utilizadores serve para carregar o TXT para a struct login que está definida em cima
-int carrega_utilizadores(login peepz[]){
+int carrega_admin(login peepz[]){
 FILE *fx; char s[40],n=0,i,j=0;
 	fx=fopen("AdminLogin.txt","r");
 	while(fgets(s,40,fx)){
@@ -33,13 +33,102 @@ FILE *fx; char s[40],n=0,i,j=0;
 	return n;
 	 	
 }
+
+
+int carregar_utilizadores(login peepz[]){
+FILE *fx; char s[40],n=0,i,j;
+	fx=fopen("Clientes.txt","r");
+	while(fgets(s,40,fx)){
+		for(i=0;s[i]!=';';i++) peepz[n].username[i]=s[i];
+		peepz[n].username[i]='\0';
+		i++;
+		j=0;
+		for(;s[i]!=';';i++) peepz[n].password[j++]=s[i];
+		peepz[n].password[j]='\0';
+		i++;
+		j=0;
+		peepz[i].tipo=atoi(&s[i]);
+                n++;
+	}
+	fclose(fx);
+	return n;
+}
+
+
+int carregar_utilizadoresx(login peepz[]){
+FILE *fx; char s[40],n=0,i,j;
+	fx=fopen("Clientesx.txt","r");
+	while(fgets(s,40,fx)){
+		for(i=0;s[i]!=';';i++) peepz[n].username[i]=s[i];
+		peepz[n].username[i]='\0';
+		i++;
+		j=0;
+		for(;s[i]!=';';i++) peepz[n].password[j++]=s[i];
+		peepz[n].password[j]='\0';
+		i++;
+		j=0;
+		peepz[i].tipo=atoi(&s[i]);
+                n++;
+	}
+	fclose(fx);
+	return n;
+}
+
+
+void listar_utilizadores(login peepz[],int n){
+  printf("------------------------------------\n");
+  printf("---- Nome ---------- Password ------\n");
+  printf("------------------------------------\n");
+  for(int i = 0; i < n; i++){
+    printf("%d -> %s --- %s\n",(i+1),peepz[i].username,peepz[i].password);
+  }
+}
+
+
+int adicionar_utilizador(login clientes[],login clientesx[],int i,int n){
+  FILE *fx;
+  int x= 0;
+  fx = fopen("Clientes.txt","a");
+  for(int j = 0; j < n; j++){
+    if(strcmp(clientes[j].username,clientesx[i].username) == 0)
+      x = 1;
+  }
+  if(strlen(clientesx[i].username) > 0 && x == 0)
+    fprintf(fx,"%s;%s;1\n",clientesx[i].username,clientesx[i].password);
+  fclose(fx);
+  n = carregar_utilizadores(clientes);
+  return n;
+}
+
+
+int atualizar_clientesx(login clientesx[],int n,int l){
+  FILE *fx;
+  fx = fopen("Clientesx.txt","w");
+  for(int i = 0; i < n;i++){
+    if(i != l && strlen(clientesx[i].username) == 11)
+      fprintf(fx,"%s;%s;1\n",clientesx[i].username,clientesx[i].password);
+  }
+  fclose(fx);
+  for(int i = 0; i<n;i++){
+    memset(clientesx[i].username, 0, sizeof(clientesx[i].username));
+    memset(clientesx[i].password, 0, sizeof(clientesx[i].password));
+    clientesx[i].tipo = 0;
+  }
+  n = carregar_utilizadoresx(clientesx);
+}
+
+
 int main(void){
   int i = 0;
   char User[20];
   char paswrd[20];
   login peepz[5];
-  int n;
-  n = carrega_utilizadores(peepz);
+  login clientes[1000];
+  login clientesx[1000];
+  int n,n1,n2;
+  n1 = carrega_admin(peepz);
+  n = carregar_utilizadores(clientes);
+  n2 = carregar_utilizadoresx(clientesx);
   menu:
   printf(ANSI_COLOR_GREEN"**Menu de autenticação**" ANSI_COLOR_RESET "\n");
   printf("1) Login / autenticação \n");
@@ -79,10 +168,8 @@ int main(void){
     }
   }
  password:
-    printf("%s\n",peepz[0].password);
     printf("Password:");
     scanf("%s", paswrd);
-    printf("%s\n",paswrd);
     if(strcmp(paswrd,peepz[0].password) != 0){
       printf("Password inválida\n");
       printf("1)Voltar ao menu\n");
@@ -99,10 +186,6 @@ int main(void){
 	if(i==2)
 	  goto password;
     }
-    else{
-      printf("ISTO ESTÁ A FUNCIONAR");
-    }
-    /*
  menu_principal:
     printf("**Menu Principal**\n");
     printf("1)Criar Novo Tópico\n");
@@ -117,15 +200,48 @@ int main(void){
       printf("A Sua Opção: ");
       scanf("%d", &i);
     }
-    if(i==1)
-      goto criar_tópicos;
-    if(i==2)
-      goto gestão_de_tópicos;
-    if(i==3)
-      goto gestão_de_utilizadores;
-    if(i==4)
-      goto estatísticas;
-    if(i==5)
-      return 0;
-    */
-}                      
+    if(i==1){
+      
+    }
+    if(i==2){
+      printf("1) Listar Tópicos \n");
+      printf("2) ....");
+    }
+    if(i==3){
+      printf("1) Listar utilizadores \n");
+      printf("2) Validar novos utilizadores \n");
+      printf("A sua Opção:");
+      scanf("%d",&i);
+      while(i < 1 || i > 2){
+	printf("Opção Invalída\n");
+	printf("A sua Opção:");
+	scanf("%d",&i);
+      }
+      if(i == 1){
+	listar_utilizadores(clientes,n);
+      }
+      if(i == 2){
+	while(i != 0){
+	  listar_utilizadores(clientesx,n2);
+	  printf("Indique os utilizadores que quer adicionar\n");
+	  printf("Pressione 0 para terminar o processo de escolha\n");
+	  printf("A sua Opção:");
+	  scanf("%d",&i);
+	  if(i != 0){
+	    n = adicionar_utilizador(clientes,clientesx,(i-1),n);
+	  }
+	  atualizar_clientesx(clientesx,n2,(i-1));
+	}
+      }
+    }
+    if(i==4){
+      printf("1) Número de utilizadores \n");
+      printf("2) Número de tópicos");
+      printf("3) Subscrições???");
+    }
+    if(i==5){
+      goto menu;
+    }
+    return 0;
+}
+    
