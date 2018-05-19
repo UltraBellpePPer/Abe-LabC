@@ -12,6 +12,9 @@ typedef struct{
   int tipo;
   }login;
 
+typedef struct{
+  char topico[40];
+}topicos;
 
 // O carrega_utilizadores serve para carregar o TXT para a struct login que está definida em cima
 int carrega_admin(login peepz[]){
@@ -54,6 +57,20 @@ FILE *fx; char s[40],n=0,i,j;
 	return n;
 }
 
+
+int carregar_topicos(topicos top[]){
+  FILE *fx;
+  char s[40];
+  int n=0, i;
+  fx=fopen("Topics.txt","r");
+    while(fgets(s,40,fx)){
+      for(i = 0; s[i] != ';';i++){
+	top[n].topico[i] = s[i];
+      }
+      n++;
+    }
+    return n;
+}
 
 int carregar_utilizadoresx(login peepz[]){
 FILE *fx; char s[40],n=0,i,j;
@@ -101,6 +118,23 @@ int adicionar_utilizador(login clientes[],login clientesx[],int i,int n){
 }
 
 
+int adicionar_topico(topicos top[], char stri[25],int n){
+  FILE *fx;
+  int x = 0;
+  fx = fopen("Topics.txt","a");
+  for(int i = 0;i < n;i++){
+    if(strcmp(top[i].topico,stri) == 0){
+      x = 1;
+    }
+  }
+  if(x == 0){
+    fprintf(fx,"%s.txt;",stri);
+    n++;
+  }
+  return n;
+}
+
+
 int atualizar_clientesx(login clientesx[],int n,int l){
   FILE *fx;
   fx = fopen("Clientesx.txt","w");
@@ -118,7 +152,31 @@ int atualizar_clientesx(login clientesx[],int n,int l){
 }
 
 
+void listar_topicos(topicos top[], int n){
+  printf("-----------------------------\n");
+  printf("---- Topicos -----------------\n");
+  for(int i = 0; i< n; i++){
+    printf("%d -> %s\n",(i+1),top[i].topico);
+  }
+}
+
+int remover_topicos(topicos top[] , int i, int n){
+  FILE *fx;
+  fx = fopen("Topics.txt","w");
+  for(int j = 0; j < n;j++){
+    if(j != i)
+      fprintf(fx,"%s;\n",top[i].topico);
+  }
+  fclose(fx);
+  n = carregar_topicos(top);
+  return n;
+}
+
 int main(void){
+  char stri[25];
+  int n3;
+  topicos top[100];
+  n3 = carregar_topicos(top);
   int i = 0;
   char User[20];
   char paswrd[20];
@@ -188,39 +246,87 @@ int main(void){
     }
  menu_principal:
     printf("**Menu Principal**\n");
-    printf("1)Criar Novo Tópico\n");
-    printf("2)Gerir Tópicos\n");
-    printf("3)Gerir Utilizadores\n");
-    printf("4)Ver Estatísticas\n");
-    printf("5)Logout\n");
+    printf("1)Gerir Tópicos\n");
+    printf("2)Gerir Utilizadores\n");
+    printf("3)Ver Estatísticas\n");
+    printf("4)Logout\n");
     printf("A Sua Opção: ");
     scanf("%d",&i);
-    while(i <= 0 || i > 5){
+    while(i <= 0 || i > 4){
       printf("Opção não válida \n");
       printf("A Sua Opção: ");
       scanf("%d", &i);
     }
-    if(i==1){
-      
-    }
-    if(i==2){
+    if(i==1){//Gerir Tópicos
       printf("1) Listar Tópicos \n");
-      printf("2) ....");
-    }
-    if(i==3){
-      printf("1) Listar utilizadores \n");
-      printf("2) Validar novos utilizadores \n");
+      printf("2) Criar novo Tópico \n");
+      printf("3) Remover Tópic0 \n");
       printf("A sua Opção:");
       scanf("%d",&i);
-      while(i < 1 || i > 2){
+      while(i < 1 || i > 3){
+	printf("Opção Inválida \n");
+	printf("A sua Opção:");
+	scanf("%d",&i);
+      }
+      if(i == 1){//Listar Topicos
+	listar_topicos(top,n3);
+      }
+      if(i == 2){//Adicionar Tópicos
+	menu_top:
+	printf("Indique o nome do seu tópico\n");
+	printf("O Tópico pode ter no máximo 20 caracteres\n");
+	printf("Não pode conter caracteres especiais\n");
+	printf("Tópico :");
+	scanf("%s",stri);
+	if(strlen(stri) > 20){
+	  printf("Tópico excede o número de caracteres");
+	  goto menu_top;
+	}
+	n3 = adicionar_topico(top,stri,n3);
+	n++;
+	printf("1) Adicionar novo tópico \n");
+	printf("2) Voltar ao menu \n");
+	printf("A sua Opção:");
+	scanf("%d",&i);
+	while(i < 1 || i > 2){
+	  printf("Opção Invalída \n");
+	  printf("A sua Opção:");
+	  scanf("%d",&i);
+	}
+	if(i == 1){
+	  goto menu_top;
+	}
+	if(i == 2){
+	  goto menu_principal;
+	}
+      }
+      if(i == 3){//remover topicos;
+	while(i > 0){
+	  listar_topicos(top,n3);
+	  printf("Indique os Tópicos a remover\n");
+	  printf("Pressione 0 para terminar o processo de escolha\n");
+	  printf("A sua Opção:");
+	  scanf("%d",&i);
+	  n3 = remover_topicos(top,(i-1),n3);
+	  }
+      }
+      goto menu_principal;
+    }
+    if(i==2){//Gerir Utilizadores
+      printf("1) Listar utilizadores \n");
+      printf("2) Validar novos utilizadores \n");
+      printf("3) Recusar novos utilizadores \n");
+      printf("A sua Opção:");
+      scanf("%d",&i);
+      while(i < 1 || i > 3){
 	printf("Opção Invalída\n");
 	printf("A sua Opção:");
 	scanf("%d",&i);
       }
-      if(i == 1){
+      if(i == 1){//Listar utilizadores
 	listar_utilizadores(clientes,n);
       }
-      if(i == 2){
+      if(i == 2){//Validar utilizadores
 	while(i != 0){
 	  listar_utilizadores(clientesx,n2);
 	  printf("Indique os utilizadores que quer adicionar\n");
@@ -233,15 +339,43 @@ int main(void){
 	  atualizar_clientesx(clientesx,n2,(i-1));
 	}
       }
+      if(i == 3){//Recusar utilizadores
+	while(i != 0){
+	  listar_utilizadores(clientesx,n2);
+	  printf("Indique os utilizadores que quer adicionar\n");
+	  printf("Pressione 0 para terminar o processo de escolha\n");
+	  printf("A sua Opção:");
+	  scanf("%d",&i);
+	  atualizar_clientesx(clientesx,n2,(i-1));
+	}
+      }
+      goto menu_principal;
     }
-    if(i==4){
+    if(i==3){//Estatisticas
       printf("1) Número de utilizadores \n");
-      printf("2) Número de tópicos");
-      printf("3) Subscrições???");
+      printf("2) Número de tópicos \n");
+      printf("A sua Opção:");
+      scanf("%d",&i);
+      while(i < 1 || i > 2){
+	printf("Opção Invalída\n");
+	printf("A sua Opção:");
+	scanf("%d",&i);
+      }
+      if(i == 1){//Número de utilizadores
+	printf("*----------------------*\n");
+	printf("|Existem %d utilizadores|\n",n);
+	printf("*----------------------*\n");
+	goto menu_principal;
+      }
+      if(i == 2){//Número de Tópicos
+	printf("-----------------\n");
+	printf("Existem %d Tópicos\n",n3);
+	printf("-----------------\n");
+	goto menu_principal;
+      }
     }
-    if(i==5){
+    if(i==4){//Logout
       goto menu;
     }
     return 0;
 }
-    
