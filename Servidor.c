@@ -127,6 +127,7 @@ int adicionar_utilizador(login clientes[],login clientesx[],int i,int n){
 int adicionar_topico(topicos top[], char stri[25],int n){
   FILE *fx;
   int x = 0;
+  char str1[40] = "Topics/";
   fx = fopen("Topics.txt","a");
   for(int i = 0;i < n;i++){
     if(strcmp(top[i].topico,stri) == 0){
@@ -134,9 +135,15 @@ int adicionar_topico(topicos top[], char stri[25],int n){
     }
   }
   if(x == 0){
-    fprintf(fx,"%s.txt;",stri);
+    fprintf(fx,"%s;",stri);
     n++;
   }
+  fclose(fx);
+  strcat(str1,stri);
+  mkdir(str1);
+  strcat(str1,"/Subtopicos.txt");
+  fx = fopen(str1,"w");
+  fclose(fx);
   return n;
 }
 
@@ -196,7 +203,7 @@ int main(void){
   menu:
   printf(GREEN "          **Menu de autenticação**" RESET "\n");
   printf(BLUE "1)  " CYAN "Login / autenticação" RESET "\n");
-  printf(BLUE "2)  " CYAN " Sair" RESET "\n");
+  printf(BLUE "2)  " CYAN "Sair" RESET "\n");
   printf(CYAN "A Sua Opção: " RESET);
   scanf("%d", &i);
   while(i <= 0 || i > 2){
@@ -267,7 +274,7 @@ int main(void){
       printf(GREEN "          **Gerir Tópicos**" RESET "\n"); 
       printf(BLUE "1)  " CYAN "Listar Tópicos" RESET "\n");
       printf(BLUE "2)  " CYAN "Criar novo Tópico" RESET "\n");
-      printf(BLUE "3)  " CYAN " Remover Tópico" RESET "\n");
+      printf(BLUE "3)  " CYAN "Remover Tópico" RESET "\n");
       printf(CYAN "A sua Opção:" RESET);
       scanf("%d",&i);
       while(i < 1 || i > 3){
@@ -366,7 +373,7 @@ int main(void){
       goto menu_principal;
     }
     if(i==3){//Estatisticas
-      printf(GREEN "          **Estatísticas**" RESET);
+      printf(GREEN "          **Estatísticas**\n" RESET);
       printf(BLUE "1)  " CYAN "Número de utilizadores" RESET "\n");
       printf(BLUE "2)  " CYAN "Número de tópicos" RESET "\n");
       printf(CYAN "A sua Opção:" RESET);
@@ -377,14 +384,14 @@ int main(void){
 	scanf("%d",&i);
       }
       if(i == 1){//Número de utilizadores
-	printf(GREEN "          **Número de utilizadores**" RESET);
+	printf(GREEN "          **Número de utilizadores**\n" RESET);
 	printf("*----------------------*\n");
 	printf(CYAN"|Existem %d utilizadores|" RESET "\n",n);
 	printf("*----------------------*\n");
 	goto menu_principal;
       }
       if(i == 2){//Número de Tópicos
-	printf(GREEN "          **Número de Tópicos**" RESET);
+	printf(GREEN "          **Número de Tópicos**\n" RESET);
 	printf("-----------------\n");
 	printf(CYAN "Existem %d Tópicos" RESET "\n",n3);
 	printf("-----------------\n");
