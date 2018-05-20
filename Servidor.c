@@ -9,7 +9,7 @@
 typedef struct{
   char username[12];
   char password[15];
-  int tipo;
+  char numero[16];
   }login;
 
 typedef struct{
@@ -29,7 +29,7 @@ FILE *fx; char s[40],n=0,i,j=0;
 		peepz[n].password[j]='\0';
 		i++;
 		j=0;
-		peepz[i].tipo=atoi(&s[i]);
+		for(;s[i] != ';';i++) peepz[n].numero[j++]=s[i];
                 n++;
 	}
 	fclose(fx);
@@ -39,9 +39,9 @@ FILE *fx; char s[40],n=0,i,j=0;
 
 
 int carregar_utilizadores(login peepz[]){
-FILE *fx; char s[40],n=0,i,j;
+FILE *fx; char s[80],n=0,i,j;
 	fx=fopen("Clientes.txt","r");
-	while(fgets(s,40,fx)){
+	while(fgets(s,80,fx)){
 		for(i=0;s[i]!=';';i++) peepz[n].username[i]=s[i];
 		peepz[n].username[i]='\0';
 		i++;
@@ -49,8 +49,7 @@ FILE *fx; char s[40],n=0,i,j;
 		for(;s[i]!=';';i++) peepz[n].password[j++]=s[i];
 		peepz[n].password[j]='\0';
 		i++;
-		j=0;
-		peepz[i].tipo=atoi(&s[i]);
+	        for(j = 0; s[i] != ';';i++) peepz[n].numero[j++]=s[i];
                 n++;
 	}
 	fclose(fx);
@@ -73,9 +72,9 @@ int carregar_topicos(topicos top[]){
 }
 
 int carregar_utilizadoresx(login peepz[]){
-FILE *fx; char s[40],n=0,i,j;
+FILE *fx; char s[80],n=0,i,j;
 	fx=fopen("Clientesx.txt","r");
-	while(fgets(s,40,fx)){
+	while(fgets(s,80,fx)){
 		for(i=0;s[i]!=';';i++) peepz[n].username[i]=s[i];
 		peepz[n].username[i]='\0';
 		i++;
@@ -83,8 +82,7 @@ FILE *fx; char s[40],n=0,i,j;
 		for(;s[i]!=';';i++) peepz[n].password[j++]=s[i];
 		peepz[n].password[j]='\0';
 		i++;
-		j=0;
-		peepz[i].tipo=atoi(&s[i]);
+	        for(j = 0; s[i] != ';';i++) peepz[n].numero[j++]=s[i];
                 n++;
 	}
 	fclose(fx);
@@ -93,11 +91,12 @@ FILE *fx; char s[40],n=0,i,j;
 
 
 void listar_utilizadores(login peepz[],int n){
-  printf("------------------------------------\n");
-  printf("---- Nome ---------- Password ------\n");
-  printf("------------------------------------\n");
+  printf("%s \n",peepz[1].numero);
+  printf("------------------------------------------------\n");
+  printf("---- Nome ---------- Password ---- Número ------\n");
+  printf("------------------------------------------------\n");
   for(int i = 0; i < n; i++){
-    printf("%d -> %s --- %s\n",(i+1),peepz[i].username,peepz[i].password);
+    printf("%d -> %s --- %s --- %s \n",(i+1),peepz[i].username,peepz[i].password,peepz[i].numero);
   }
 }
 
@@ -146,7 +145,7 @@ int atualizar_clientesx(login clientesx[],int n,int l){
   for(int i = 0; i<n;i++){
     memset(clientesx[i].username, 0, sizeof(clientesx[i].username));
     memset(clientesx[i].password, 0, sizeof(clientesx[i].password));
-    clientesx[i].tipo = 0;
+    memset(clientesx[i].numero, 0, sizeof(clientesx[i].numero));
   }
   n = carregar_utilizadoresx(clientesx);
 }
