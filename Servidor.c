@@ -3,14 +3,14 @@
 #include<ctype.h>
 #include<stdlib.h>
 
-#define GREEN   "\x1b[32m"
-#define RED     "\x1B[31m"
-#define YELLOW  "\x1B[33m"
-#define BLUE    "\x1B[34m"
+#define GREEN "\x1b[32m"
+#define RED "\x1B[31m"
+#define YELLOW "\x1B[33m"
+#define BLUE "\x1B[34m"
 #define MAGENTA "\x1B[35m"
-#define CYAN    "\x1B[36m"
-#define WHITE   "\x1B[37m"
-#define RESET   "\x1b[0m"
+#define CYAN "\x1B[36m"
+#define WHITE "\x1B[37m"
+#define RESET "\x1b[0m"
 
 
 typedef struct{
@@ -100,10 +100,10 @@ FILE *fx; char s[80],n=0,i,j;
 void listar_utilizadores(login peepz[],int n){
   printf("%s \n",peepz[1].numero);
   printf("------------------------------------------------\n");
-  printf("---- Nome ---------- Password ---- Número ------\n");
+  printf("---- " YELLOW "Nome " RESET "---------- " YELLOW "Password " RESET "---- " YELLOW "Número " RESET "------\n");
   printf("------------------------------------------------\n");
   for(int i = 0; i < n; i++){
-    printf("%d -> %s --- %s --- %s \n",(i+1),peepz[i].username,peepz[i].password,peepz[i].numero);
+    printf(YELLOW "%d " RESET "-> " CYAN "%s " RESET "--- " CYAN "%s " RESET "--- " YELLOW "%s " RESET "\n",(i+1),peepz[i].username,peepz[i].password,peepz[i].numero);
   }
 }
 
@@ -160,9 +160,9 @@ int atualizar_clientesx(login clientesx[],int n,int l){
 
 void listar_topicos(topicos top[], int n){
   printf("-----------------------------\n");
-  printf("---- Topicos -----------------\n");
+  printf("---- " YELLOW "Topicos " RESET "-----------------\n");
   for(int i = 0; i< n; i++){
-    printf("%d -> %s\n",(i+1),top[i].topico);
+    printf(YELLOW "%d " RESET "-> " YELLOW "%s" RESET "\n",(i+1),top[i].topico);
   }
 }
 
@@ -195,13 +195,13 @@ int main(void){
   n2 = carregar_utilizadoresx(clientesx);
   menu:
   printf(GREEN "          **Menu de autenticação**" RESET "\n");
-  printf(BLUE "1)" CYAN "Login / autenticação" RESET "\n");
-  printf("2) Sair \n");
-  printf("A Sua Opção: ");
+  printf(BLUE "1)  " CYAN "Login / autenticação" RESET "\n");
+  printf(BLUE "2)  " CYAN " Sair" RESET "\n");
+  printf(CYAN "A Sua Opção: " RESET);
   scanf("%d", &i);
   while(i <= 0 || i > 2){
-    printf("Opção não válida \n");
-    printf("A Sua Opção: ");
+    printf(RED "Opção não válida" RESET "\n");
+    printf(CYAN "A Sua Opção: " RESET);
     scanf("%d", &i);
   }
   if(i == 2){
@@ -209,17 +209,17 @@ int main(void){
   }
   else{
   login:
-    printf("Nome de utilizador:");
+    printf(CYAN "Nome de utilizador:" RESET);
     scanf("%s",User);
     if(strcmp(User,peepz[0].username) != 0){ // O strcmp serve para comparar duas Strings. As duas Strings são iguais quando o resulatado é 0
-      printf("Utilizador inválido\n");
-      printf("1)Voltar ao menu\n");
-      printf("2)Tentar novamente\n");
-      printf("A sua Opção:");
+      printf(RED "Utilizador inválido" RESET "\n");
+      printf(BLUE "1)  " CYAN "Voltar ao menu" RESET "\n");
+      printf(BLUE "2)  " CYAN "Tentar novamente\n");
+      printf("A sua Opção:" RESET);
       scanf("%d", &i);
       while(i <= 0 || i > 2){
-	printf("Opção não válida \n");
-	printf("A Sua Opção: ");
+	printf(RED "Opção não válida" RESET "\n");
+	printf(CYAN "A Sua Opção: " RESET);
 	scanf("%d", &i);
       }
       if (i==1)
@@ -232,17 +232,17 @@ int main(void){
     }
   }
  password:
-    printf("Password:");
+    printf(CYAN "Password:" RESET);
     scanf("%s", paswrd);
     if(strcmp(paswrd,peepz[0].password) != 0){
-      printf("Password inválida\n");
-      printf("1)Voltar ao menu\n");
-      printf("2)Tentar novamente\n");
-      printf("A Sua Opção:");
+      printf(RED "Password inválida" RESET "\n");
+      printf(BLUE "1)  " CYAN "Voltar ao menu" RESET "\n");
+      printf(BLUE "2)  " CYAN "Tentar novamente" RESET "\n");
+      printf(CYAN "A Sua Opção:" RESET);
       scanf("%d", &i);
       while(i <= 0 || i > 2){
-	printf("Opção não válida \n");
-	printf("A Sua Opção: ");
+	printf(RED "Opção não válida" RESET "\n");
+	printf(CYAN "A Sua Opção: " RESET);
 	scanf("%d", &i);   
       }
 	if(i==1)
@@ -251,52 +251,55 @@ int main(void){
 	  goto password;
     }
  menu_principal:
-    printf("**Menu Principal**\n");
-    printf("1)Gerir Tópicos\n");
-    printf("2)Gerir Utilizadores\n");
-    printf("3)Ver Estatísticas\n");
-    printf("4)Logout\n");
-    printf("A Sua Opção: ");
+    printf(GREEN "          **Menu Principal**" RESET "\n");
+    printf(BLUE "1)  " CYAN "Gerir Tópicos" RESET "\n");
+    printf(BLUE "2)  " CYAN "Gerir Utilizadores" RESET "\n");
+    printf(BLUE "3)  " CYAN "Ver Estatísticas" RESET "\n");
+    printf(BLUE "4)  " CYAN "Logout" RESET "\n");
+    printf(CYAN "A Sua Opção: " RESET);
     scanf("%d",&i);
     while(i <= 0 || i > 4){
-      printf("Opção não válida \n");
-      printf("A Sua Opção: ");
+      printf(RED "Opção não válida" RESET "\n");
+      printf(CYAN "A Sua Opção: " RESET);
       scanf("%d", &i);
     }
     if(i==1){//Gerir Tópicos
-      printf("1) Listar Tópicos \n");
-      printf("2) Criar novo Tópico \n");
-      printf("3) Remover Tópic0 \n");
-      printf("A sua Opção:");
+      printf(GREEN "          **Gerir Tópicos**" RESET "\n"); 
+      printf(BLUE "1)  " CYAN "Listar Tópicos" RESET "\n");
+      printf(BLUE "2)  " CYAN "Criar novo Tópico" RESET "\n");
+      printf(BLUE "3)  " CYAN " Remover Tópico" RESET "\n");
+      printf(CYAN "A sua Opção:" RESET);
       scanf("%d",&i);
       while(i < 1 || i > 3){
-	printf("Opção Inválida \n");
-	printf("A sua Opção:");
+	printf(RED "Opção Inválida" RESET "\n");
+	printf(CYAN "A sua Opção:" RESET);
 	scanf("%d",&i);
       }
       if(i == 1){//Listar Topicos
+	printf(GREEN "          **Lista de Tópicos**" RESET "\n");
 	listar_topicos(top,n3);
       }
       if(i == 2){//Adicionar Tópicos
 	menu_top:
-	printf("Indique o nome do seu tópico\n");
-	printf("O Tópico pode ter no máximo 20 caracteres\n");
-	printf("Não pode conter caracteres especiais\n");
-	printf("Tópico :");
+	printf(GREEN "          **Adicionar Tópicos**\n" RESET);
+	printf(CYAN "Indique o nome do seu tópico" RESET "\n");
+	printf(MAGENTA  " O Tópico pode ter no máximo 20 caracteres"  RESET "\n");
+	printf(MAGENTA " Não pode conter caracteres especiais" RESET "\n");
+	printf(CYAN "Tópico :"RESET);
 	scanf("%s",stri);
 	if(strlen(stri) > 20){
-	  printf("Tópico excede o número de caracteres");
+	  printf(RED "Tópico excede o número de caracteres" RESET);
 	  goto menu_top;
 	}
 	n3 = adicionar_topico(top,stri,n3);
 	n++;
-	printf("1) Adicionar novo tópico \n");
-	printf("2) Voltar ao menu \n");
-	printf("A sua Opção:");
+	printf(BLUE "1)  " CYAN "Adicionar novo tópico" RESET "\n");
+	printf(BLUE "2)  " CYAN "Voltar ao menu" RESET "\n");
+	printf(CYAN "A sua Opção:" RESET);
 	scanf("%d",&i);
 	while(i < 1 || i > 2){
-	  printf("Opção Invalída \n");
-	  printf("A sua Opção:");
+	  printf(RED "Opção Invalída" RESET "\n");
+	  printf(CYAN "A sua Opção:" RESET);
 	  scanf("%d",&i);
 	}
 	if(i == 1){
@@ -306,38 +309,42 @@ int main(void){
 	  goto menu_principal;
 	}
       }
-      if(i == 3){//remover topicos;
+      if(i == 3){//remover topicos
+	printf(GREEN "          **Remover tópicos**" RESET "\n");
 	while(i > 0){
 	  listar_topicos(top,n3);
-	  printf("Indique os Tópicos a remover\n");
-	  printf("Pressione 0 para terminar o processo de escolha\n");
-	  printf("A sua Opção:");
+	  printf(CYAN "Indique os Tópicos a remover" RESET "\n");
+	  printf(MAGENTA "Pressione 0 para terminar o processo de escolha"RESET "\n");
+	  printf(CYAN "A sua Opção:" RESET);
 	  scanf("%d",&i);
 	  n3 = remover_topicos(top,(i-1),n3);
 	  }
-      }
+       }
       goto menu_principal;
     }
     if(i==2){//Gerir Utilizadores
-      printf("1) Listar utilizadores \n");
-      printf("2) Validar novos utilizadores \n");
-      printf("3) Recusar novos utilizadores \n");
-      printf("A sua Opção:");
+      printf(GREEN "          **Gestão de Utilizadores**" RESET "\n");
+      printf(BLUE "1)  " CYAN "Listar utilizadores" RESET "\n");
+      printf(BLUE "2)  " CYAN "Validar novos utilizadores" RESET "\n");
+      printf(BLUE "3)  " CYAN "Recusar novos utilizadores" RESET "\n");
+      printf(CYAN "A sua Opção:" RESET);
       scanf("%d",&i);
       while(i < 1 || i > 3){
-	printf("Opção Invalída\n");
-	printf("A sua Opção:");
+	printf(RED "Opção Invalída" RESET "\n");
+	printf(CYAN "A sua Opção:" RESET);
 	scanf("%d",&i);
       }
       if(i == 1){//Listar utilizadores
+	printf(GREEN "          **Lista de Utilizadores**" RESET "\n");
 	listar_utilizadores(clientes,n);
       }
       if(i == 2){//Validar utilizadores
+	printf(GREEN "          **Validação de Utilizadores**" RESET "\n");
 	while(i != 0){
 	  listar_utilizadores(clientesx,n2);
-	  printf("Indique os utilizadores que quer adicionar\n");
-	  printf("Pressione 0 para terminar o processo de escolha\n");
-	  printf("A sua Opção:");
+	  printf(CYAN "Indique os utilizadores que quer adicionar" RESET "\n");
+	  printf(MAGENTA "Pressione 0 para terminar o processo de escolha" RESET "\n");
+	  printf(CYAN "A sua Opção:" RESET);
 	  scanf("%d",&i);
 	  if(i != 0){
 	    n = adicionar_utilizador(clientes,clientesx,(i-1),n);
@@ -346,11 +353,12 @@ int main(void){
 	}
       }
       if(i == 3){//Recusar utilizadores
+	printf(GREEN "          **Recusar Utilizadores" RESET);
 	while(i != 0){
 	  listar_utilizadores(clientesx,n2);
-	  printf("Indique os utilizadores que quer adicionar\n");
-	  printf("Pressione 0 para terminar o processo de escolha\n");
-	  printf("A sua Opção:");
+	  printf(CYAN "Indique os utilizadores que quer adicionar" RESET "\n");
+	  printf(MAGENTA "Pressione 0 para terminar o processo de escolha" RESET "\n");
+	  printf(CYAN "A sua Opção:" RESET);
 	  scanf("%d",&i);
 	  atualizar_clientesx(clientesx,n2,(i-1));
 	}
@@ -358,24 +366,27 @@ int main(void){
       goto menu_principal;
     }
     if(i==3){//Estatisticas
-      printf("1) Número de utilizadores \n");
-      printf("2) Número de tópicos \n");
-      printf("A sua Opção:");
+      printf(GREEN "          **Estatísticas**" RESET);
+      printf(BLUE "1)  " CYAN "Número de utilizadores" RESET "\n");
+      printf(BLUE "2)  " CYAN "Número de tópicos" RESET "\n");
+      printf(CYAN "A sua Opção:" RESET);
       scanf("%d",&i);
       while(i < 1 || i > 2){
-	printf("Opção Invalída\n");
-	printf("A sua Opção:");
+	printf(RED "Opção Invalída" RESET "\n");
+	printf(CYAN "A sua Opção:" RESET);
 	scanf("%d",&i);
       }
       if(i == 1){//Número de utilizadores
+	printf(GREEN "          **Número de utilizadores**" RESET);
 	printf("*----------------------*\n");
-	printf("|Existem %d utilizadores|\n",n);
+	printf(CYAN"|Existem %d utilizadores|" RESET "\n",n);
 	printf("*----------------------*\n");
 	goto menu_principal;
       }
       if(i == 2){//Número de Tópicos
+	printf(GREEN "          **Número de Tópicos**" RESET);
 	printf("-----------------\n");
-	printf("Existem %d Tópicos\n",n3);
+	printf(CYAN "Existem %d Tópicos" RESET "\n",n3);
 	printf("-----------------\n");
 	goto menu_principal;
       }
