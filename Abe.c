@@ -48,8 +48,8 @@ void comenta_sub(topicos subtop[], int i,login peepz[],int u,topicos top[],int j
   scanf("%s",str2);
   fprintf(fx,"%s",str2);
   fprintf(fx," \n");
-  printf("1 -> Continuar \n");
-  printf("2 -> Terminar \n");
+  printf("1  ->  Continuar \n");
+  printf("2  ->  Terminar \n");
   printf("A sua Opção:");
   scanf("%d",&x);
   while(x < 1 || x > 2){
@@ -169,9 +169,9 @@ int main(void){
  menu_aut:
   n = carregar_utilizadores(peepz);
   n3 = carregar_topicos(top);
-  printf("**Menu de autenticação** \n");
-  printf("1)Login \n");
-  printf("2)Pedido de registo de novo utilizador \n");
+  printf("          **Menu de autenticação** \n");
+  printf("1)  Login \n");
+  printf("2)  Pedido de registo de novo utilizador \n");
   printf("3)Sair \n");
   printf("A Sua Opcão: ");
   scanf("%d",&i);
@@ -198,8 +198,8 @@ int main(void){
     } 
     if(strlen(User) != 11 || i == -1){
       printf("Username Inválido ou Já Existente\n");
-      printf("1) Tentar Novamente \n");
-      printf("2) Voltar ao menu \n");
+      printf("1)   Tentar Novamente \n");
+      printf("2)   Voltar ao menu \n");
       printf("A sua Opção:");
       scanf("%d" , &i);
       while(i <= 0 || i > 2){
@@ -232,8 +232,8 @@ int main(void){
     }
     if(!(y == 1 && z == 1 && (strlen(Userpass) >= 4 && strlen(Userpass) <= 15))){
       printf("Password Inválida \n");
-      printf("1) Tentar Novamente \n");
-      printf("2) Voltar ao menu \n");
+      printf("1)  Tentar Novamente \n");
+      printf("2)  Voltar ao menu \n");
       printf("A sua Opção:");
       scanf("%d" , &i);
       while(i <= 0 || i > 2){
@@ -269,8 +269,8 @@ int main(void){
     }
     if(j == 0){
       printf("Utilizador inválido\n");
-      printf("1)Voltar ao menu\n");
-      printf("2)Tentar novamente\n");
+      printf("1)  Voltar ao menu\n");
+      printf("2)  Tentar novamente\n");
       printf("A sua Opção:");
       scanf("%d", &i);
       while(i <= 0 || i > 2){
@@ -290,8 +290,8 @@ int main(void){
   scanf("%s",paswrd);
   if(strcmp(paswrd,peepz[i].password) != 0){
       printf("Password inválida\n");
-      printf("1)Voltar ao menu\n");
-      printf("2)Tentar novamente\n");
+      printf("1)  Voltar ao menu\n");
+      printf("2)  Tentar novamente\n");
       printf("A sua Opção:");
       scanf("%d", &i);
       while(i <= 0 || i > 2){
@@ -377,8 +377,8 @@ int main(void){
       }
       if(!(y == 1 && z == 1 && (strlen(NewUserpass) >= 4 && strlen(NewUserpass) <= 15))){
 	printf("Password Inválida \n");
-	printf("1) Tentar Novamente \n");
-	printf("2) Voltar ao menu \n");
+	printf("1)  Tentar Novamente \n");
+	printf("2)  Voltar ao menu \n");
 	printf("A sua Opção:");
 	scanf("%d" , &i);
 	while(i <= 0 || i > 2){
