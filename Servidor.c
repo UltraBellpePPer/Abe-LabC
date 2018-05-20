@@ -3,8 +3,15 @@
 #include<ctype.h>
 #include<stdlib.h>
 
-#define ANSI_COLOR_GREEN "\x1b[32m"
-#define ANSI_COLOR_RESET "\x1b[0m"
+#define GREEN   "\x1b[32m"
+#define RED     "\x1B[31m"
+#define YELLOW  "\x1B[33m"
+#define BLUE    "\x1B[34m"
+#define MAGENTA "\x1B[35m"
+#define CYAN    "\x1B[36m"
+#define WHITE   "\x1B[37m"
+#define RESET   "\x1b[0m"
+
 
 typedef struct{
   char username[12];
@@ -187,8 +194,8 @@ int main(void){
   n = carregar_utilizadores(clientes);
   n2 = carregar_utilizadoresx(clientesx);
   menu:
-  printf(ANSI_COLOR_GREEN"**Menu de autenticação**" ANSI_COLOR_RESET "\n");
-  printf("1) Login / autenticação \n");
+  printf(GREEN "          **Menu de autenticação**" RESET "\n");
+  printf(BLUE "1)" CYAN "Login / autenticação" RESET "\n");
   printf("2) Sair \n");
   printf("A Sua Opção: ");
   scanf("%d", &i);
