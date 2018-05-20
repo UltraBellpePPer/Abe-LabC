@@ -45,6 +45,7 @@ int main(void){
   login peepz[1000];
   FILE *fx;
   char Userpass[16];
+  char paswrd[16];
  menu_aut:
   n = carregar_utilizadores(peepz);
   printf("**Menu de autenticação** \n");
@@ -159,6 +160,54 @@ int main(void){
     }
   }
   else{
-    return 0;
+    goto password;
   }
+ password:
+  printf("Password:");
+  scanf("%s",paswrd);
+  for(i = 0;i < n;i++){
+    if(strcmp(paswrd,peepz[i].password) == 0){
+      j = 1;
+      break;
+    }
+  }
+   printf("%s\n",peepz[i].password);
+    if(j == 0){
+      printf("Password inválida\n");
+      printf("1)Voltar ao menu\n");
+      printf("2)Tentar novamente\n");
+      printf("A sua Opção:");
+      scanf("%d", &i);
+      while(i <= 0 || i > 2){
+	printf("Opção não válida \n");
+	printf("A Sua Opção: ");
+	scanf("%d", &i);
+      }
+      if(i==1)
+	goto menu_aut;
+      if(i==2)
+	goto password;
+    }
+    else{
+     goto menu_principal;
+    }
+ menu_principal:
+    //vou escrever o q falta como está na cena do sor
+    printf("Gestão  de conta aka mudar as cenas como numero(falta adicionarmos numeros,n sei como meter no ficheiro sorry,senão  fazia,acho q deve ficar nno registo), mudar pass e utilizador.n sei se isso é possível.\n");
+    printf("ver feed(?)\n");
+    printf("ver mesnganes de um topico(ao  abrir um topico ve se\n");
+    printf("procurar topicos mais ativos\n");
+    printf("publicar num tópico(ao abrir tmb)\n");
+    printf("Gerir lista de subscricoes\n");
+    printf("Gostos,favoritos(o mesmo q subscriçoes)\n");
+    printf("publicar um topico\n");
+    printf("Estatisticas:(quantidade de mensagens recebidas nototal pelo cliente em todos os tópicos, quantidade de mensagens num determinado topico, nomes de utilizadores e respetivo numero de mensagens por topico, informacoes sobre likes\n");
+    // btw vou tentar ver uma maneira de fazermos os ficheiros invizíveis  n pasta,mas depois vai ser necessário por as instruçoes decomoos encontrar  no readme,e vou precisar q tenhas todos os ficheiros necessarios para q ospossa esconder, se souberes maneira tmb dava jeito. BVou dormir,n aguento mais ,fim de semana de merda. Opah vou meter as cenas a cores aomenos sei lá.
+    
+    // o problema q estou a ver é por os gajos a alterar a pass e tal, as subscriºoes e assim, agora men...tipo n sei comoconsigo ajudar ...sorry isto écomplexo demais tbh, eu tentei ler e enteder ,entendi mais ou menos ,masn consigo reproduzir...
 }
+      
+
+
+
+
